@@ -1,0 +1,36 @@
+pipeline {
+
+     agent any
+   tools {
+        maven 'maven - 3.5.0'
+   
+   }
+   stages {
+     stage('checkout') {
+         steps {
+           git 'https://github.com/srikanth9966/mavenproject.git'
+  
+         } 
+ 
+     }
+    
+     stage('maven build') {
+         steps {
+          sh 'mvn clean install'
+  
+         } 
+
+     }
+
+     stage('ansible-deploy') {
+        steps {
+          sh "sudo su - srikanth -c 'ansible-playbook /home/srikanth/deploy.yml'" 
+  
+        }
+     
+    
+     }
+ 
+   }
+    
+  }
